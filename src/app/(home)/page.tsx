@@ -1,4 +1,8 @@
+import ProductCard from "@/components/cards/product-card";
+import type {Product} from "@/types/types"
+
 export default function Home() {
+  const products: Product[] = [];
   return (
     <>
       <section className="content-grid full-width text-center gap-y-4 py-24">
@@ -11,7 +15,9 @@ export default function Home() {
         </p>
       </section>
       <section>
-        
+        {products.map((product) => (
+          <ProductCard key={product.id} product={product} />
+        ))}
       </section>
     </>
   );
