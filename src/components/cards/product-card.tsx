@@ -1,6 +1,6 @@
 "use client";
 
-import type { Product } from "@/types/types";
+import type { Product } from "@/db/schema";
 import { Card, CardFooter, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/store/cart-store"

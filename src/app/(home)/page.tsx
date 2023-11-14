@@ -1,8 +1,10 @@
 import ProductCard from "@/components/cards/product-card";
-import type {Product} from "@/types/types"
+import { db } from "@/db";
+import { products } from "@/db/schema";
 
-export default function Home() {
-  const products: Product[] = [];
+export default async function Home() {
+  const queryProducts = await db.select().from(products);
+  
   return (
     <>
       <section className="content-grid full-width text-center gap-y-4 py-24">
@@ -15,7 +17,7 @@ export default function Home() {
         </p>
       </section>
       <section>
-        {products.map((product) => (
+        {queryProducts.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
       </section>

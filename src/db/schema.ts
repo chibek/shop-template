@@ -22,3 +22,5 @@ export const products = pgTable("products", {
   images: json("images").default("null"),
   createdAt: timestamp("createdAt", { mode: "string" }).defaultNow(),
 });
+
+export type Product = typeof products.$inferSelect;
