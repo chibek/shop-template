@@ -1,12 +1,12 @@
 {
   "version": "5",
-  "dialect": "pg",
+  "dialect": "mysql",
   "entries": [
     {
       "idx": 0,
       "version": "5",
-      "when": 1699893989330,
-      "tag": "0000_gifted_rhodey",
+      "when": 1700006889749,
+      "tag": "0000_wild_anita_blake",
       "breakpoints": true
     }
   ]

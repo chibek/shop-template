@@ -1,4 +1,3 @@
-import { createBrowserClient } from '@supabase/ssr'
 import { NextResponse } from 'next/server'
 
 export async function middleware(req) {

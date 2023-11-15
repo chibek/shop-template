@@ -1,50 +1,55 @@
 {
-  "id": "d673a219-3a1b-43c0-9e9c-bb014d8e473f",
-  "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "5",
-  "dialect": "pg",
+  "dialect": "mysql",
+  "id": "91ec9f4e-4a7d-4a0f-9119-7d038bf4d185",
+  "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "products": {
       "name": "products",
-      "schema": "",
       "columns": {
         "id": {
           "name": "id",
           "type": "serial",
-          "primaryKey": true,
-          "notNull": true
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
         },
         "name": {
           "name": "name",
           "type": "varchar(191)",
           "primaryKey": false,
-          "notNull": true
+          "notNull": true,
+          "autoincrement": false
         },
         "description": {
           "name": "description",
           "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": false,
+          "autoincrement": false
         },
         "price": {
           "name": "price",
-          "type": "numeric(10, 2)",
+          "type": "decimal(10,2)",
           "primaryKey": false,
           "notNull": true,
+          "autoincrement": false,
           "default": "'0.00'"
         },
         "rating": {
           "name": "rating",
-          "type": "integer",
+          "type": "int",
           "primaryKey": false,
           "notNull": true,
+          "autoincrement": false,
           "default": 0
         },
         "inventory": {
           "name": "inventory",
-          "type": "integer",
+          "type": "int",
           "primaryKey": false,
           "notNull": true,
+          "autoincrement": false,
           "default": 0
         },
         "thumbnail": {
@@ -52,6 +57,7 @@
           "type": "varchar(191)",
           "primaryKey": false,
           "notNull": false,
+          "autoincrement": false,
           "default": "'null'"
         },
         "images": {
@@ -59,23 +65,31 @@
           "type": "json",
           "primaryKey": false,
           "notNull": false,
-          "default": "'null'"
+          "autoincrement": false,
+          "default": "('null')"
         },
         "createdAt": {
           "name": "createdAt",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": false,
-          "default": "now()"
+          "autoincrement": false,
+          "default": "(now())"
         }
       },
       "indexes": {},
       "foreignKeys": {},
-      "compositePrimaryKeys": {},
+      "compositePrimaryKeys": {
+        "products_id": {
+          "name": "products_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
       "uniqueConstraints": {}
     }
   },
-  "enums": {},
   "schemas": {},
   "_meta": {
     "schemas": {},

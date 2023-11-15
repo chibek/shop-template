@@ -7,9 +7,9 @@ if (!env.DATABASE_URL) {
 
 export default {
   schema: "./src/db/schema.ts",
-  driver: "pg",
+  driver: "mysql2",
   out: "./drizzle",
   dbCredentials: {
-    connectionString: env.DATABASE_URL,
+    uri: env.DATABASE_URL,
   },
 } satisfies Config

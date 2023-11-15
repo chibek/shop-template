@@ -14,6 +14,7 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import CartSheet from "@/components/cart/cart-sheet";
+import { buttonVariants } from "@/components/ui/button";
 
 const components: { title: string; href: string; description: string }[] = [
   {
@@ -122,6 +123,17 @@ export function MainNav() {
       </div>
       <div>
         <CartSheet />
+      </div>
+      <div>
+        <Link
+          href="/signin"
+          className={buttonVariants({
+            size: "sm",
+          })}
+        >
+          Sign In
+          <span className="sr-only">Sign In</span>
+        </Link>
       </div>
     </header>
   );
