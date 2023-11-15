@@ -121,10 +121,8 @@ export function MainNav() {
           </NavigationMenuList>
         </NavigationMenu>
       </div>
-      <div>
+      <div className="flex gap-2">
         <CartSheet />
-      </div>
-      <div>
         <Link
           href="/signin"
           className={buttonVariants({

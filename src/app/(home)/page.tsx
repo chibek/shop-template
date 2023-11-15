@@ -4,7 +4,6 @@ import { products } from "@/db/schema";
 
 export default async function Home() {
   const queryProducts = await db.select().from(products);
-  
   return (
     <>
       <section className="content-grid full-width text-center gap-y-4 py-24">

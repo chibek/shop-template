@@ -1,6 +1,6 @@
 import { create } from "zustand"
 
-import type { Product } from "@/types/types"
+import type { Product } from "@/types"
 
 // Define the interface of the Cart state
 interface State {
