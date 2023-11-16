@@ -21,7 +21,7 @@ export default function ProductCard({
       className={className}
       {...props}
     >
-      <CardHeader>{product.name}</CardHeader>
+      <CardHeader>{product.name} {product.price}</CardHeader>
       <CardFooter className="p-4">
         <Button onClick={() => {
             addToCart(product)

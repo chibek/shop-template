@@ -9,7 +9,7 @@ import { PasswordInput } from "@/components/password-input";
 import { Output } from "valibot";
 import { authSchema } from "@/lib/validations/auth";
 import { useRouter } from "next/navigation";
-import { useSignIn, useUser } from "@clerk/nextjs";
+import { useSignIn } from "@clerk/nextjs";
 import { useTransition } from "react";
 import { Spinner } from "../icons";
 import { catchClerkError } from "@/lib/utils";
@@ -17,7 +17,6 @@ import { catchClerkError } from "@/lib/utils";
 type SchemaType = Output<typeof authSchema>
 
 export default function SignInForm() {
-  const { isSignedIn, user } = useUser();
 
     const router = useRouter()
     const { isLoaded, signIn, setActive } = useSignIn()
@@ -101,7 +100,6 @@ export default function SignInForm() {
         Sign in
         <span className="sr-only">Sign in</span>
       </Button>
-      {JSON.stringify(isSignedIn)}
     </form>
   </Form>);
 }

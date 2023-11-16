@@ -1,11 +1,15 @@
 import { MainNav } from "@/components/layouts/main-nav";
+import { SiteHeader } from "@/components/layouts/site-header";
+import { currentUser } from "@clerk/nextjs";
 
 export default async function HomeLayout({
   children,
 }: React.PropsWithChildren) {
+  const user = await currentUser()
+
   return (
     <div className="flex min-h-screen flex-col">
-      <MainNav />
+      <SiteHeader user={user}/>
       <main className="content-grid">
         {children}
       </main>

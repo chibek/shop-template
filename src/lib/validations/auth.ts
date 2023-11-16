@@ -9,6 +9,7 @@ import {
   enum_,
   optional,
   nullable,
+  nonOptional
 } from "valibot";
 
 const ROLES = {
@@ -19,6 +20,13 @@ const ROLES = {
 
 export const authSchema = object({
   email: string([email("Please enter a valid email address")]),
+  password: string([minLength(1, "Field is required")])
+});
+
+export const signUpSchema = object({
+  firstName: string(),
+  lastName: string(),
+  ...authSchema.entries,
   password: string([
     minLength(8, "Password must be at least 8 characters long"),
     maxLength(100),
@@ -26,7 +34,7 @@ export const authSchema = object({
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
       "Password must contain at least 8 characters, one uppercase, one lowercase, one number and one special character"
     ),
-  ]),
+  ])
 });
 
 export const verifyEmailSchema = object({

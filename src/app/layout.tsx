@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { TailwindIndicator } from "@/components/tailwind-indicator";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from '@clerk/themes';
+import { Toaster } from 'sonner';
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -24,6 +25,7 @@ export default function RootLayout({
         <body className={cn(GeistSans.className, "dark min-h-screen")}>
           {children}
           <TailwindIndicator />
+          <Toaster richColors={true}/>
         </body>
       </html>
     </ClerkProvider>

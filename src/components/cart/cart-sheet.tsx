@@ -1,7 +1,8 @@
+"use client";
+
 import {
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -10,9 +11,23 @@ import { Cart } from "@/components/icons";
 import { useCartStore } from "@/store/cart-store";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import useStore from "@/store/useStore";
 
 export default function CartSheet() {
-  const { cart, totalItems, totalPrice } = useCartStore((state) => state);
+  const cartStore = useStore(useCartStore, (state) => state);
+  if (!cartStore) {
+    return (
+      <Button
+        aria-label="Open cart"
+        variant="outline"
+        size="icon"
+        className="relative"
+      >
+        <Cart className="h-4 w-4" aria-hidden="true" />
+      </Button>
+    );
+  }
+  const { totalItems, cart, totalPrice } = cartStore;
 
   return (
     <Sheet>
@@ -37,18 +52,16 @@ export default function CartSheet() {
       <SheetContent>
         <SheetHeader>
           <SheetTitle>Are you sure absolutely sure?</SheetTitle>
-          <SheetDescription>
-            <ul>
-              {cart.map((product) => (
-                <li key={product.id}>{product.name}</li>
-              ))}
-            </ul>
-            <div className="flex justify-between items-center mt-4">
-              <span className="text-lg font-bold">Total:</span>
-              <span className="text-xl font-bold">${totalPrice.toFixed(2)}</span>
-            </div>
-          </SheetDescription>
         </SheetHeader>
+        <ul>
+          {cart.map((product) => (
+            <li key={product.id}>{product.name}</li>
+          ))}
+        </ul>
+        <div className="flex justify-between items-center mt-4">
+          <span className="text-lg font-bold">Total:</span>
+          <span className="text-xl font-bold">${totalPrice.toFixed(2)}</span>
+        </div>
       </SheetContent>
     </Sheet>
   );
