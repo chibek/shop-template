@@ -36,11 +36,11 @@ export default async function ProfileLayout({
   return (
     <div className="flex min-h-screen flex-col">
       <SiteHeader user={user} />
-      <div className="container max-w-[120rem] grid grid-cols-[auto_minmax(0,1fr)] sm:grid-cols-[220px_minmax(0,1fr)] pt-6 gap-6 flex-1 transition-all">
-        <aside className="border-r pr-4 sm:w-full sm:hover:w-full w-[50px] hover:w-[170px] duration-300 transition-all group">
+      <div className="container max-w-[120rem] grid grid-cols-[auto_minmax(0,1fr)] md:grid-cols-[220px_minmax(0,1fr)] pt-6 gap-6 flex-1 transition-all">
+        <aside className="border-r pr-4 md:w-full md:hover:w-full w-[50px] hover:w-[170px] duration-300 transition-all group">
             <SidebarNav items={sidebarOptions} />
         </aside>
-        <main>{children}</main>
+        <main className="flex w-full flex-col overflow-hidden">{children}</main>
       </div>
     </div>
   );

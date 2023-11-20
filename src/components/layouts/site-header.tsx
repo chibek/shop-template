@@ -11,8 +11,8 @@ export interface SiteHeaderProps {
 export function SiteHeader({ user }: SiteHeaderProps) {
   return (
     <header className="w-full p-4">
-      <div className="container grid grid-cols-3 gap-2 place-items-center">
-        <MainNav className="col-start-2" />
+      <div className="container grid grid-cols-3 gap-2 place-items-center min-w-[635px]">
+        <MainNav className="md:col-start-2 md:col-span-1 col-span-2" />
         <div className="flex items-center gap-2 place-self-end">
           <CartSheet />
           {user ? <UserAvatar user={user} /> : <HeaderLogin />}
