@@ -9,9 +9,9 @@ import {
 import { AvatarImage, Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { SiteHeaderProps } from "@/components/layouts/site-header";
 import { getUserEmail } from "@/lib/utils";
-import { useClerk } from "@clerk/nextjs";
-import { useRouter } from "next/navigation";
 import LogOut from "./log-out";
+import Link from "next/link";
+import { Dashboard, Favorites, OrderList } from "@/components/icons";
 
 export default function UserAvatar({ user }: SiteHeaderProps) {
   const initials = `${user?.firstName?.charAt(0) ?? ""} ${
@@ -24,7 +24,9 @@ export default function UserAvatar({ user }: SiteHeaderProps) {
       <DropdownMenuTrigger>
         <Avatar className="h-8 w-8">
           <AvatarImage src={user?.imageUrl} alt={user?.username ?? ""} />
-          <AvatarFallback>{initials}</AvatarFallback>
+          <AvatarFallback className="text-xs leading-none">
+            {initials}
+          </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
@@ -35,9 +37,24 @@ export default function UserAvatar({ user }: SiteHeaderProps) {
           <p className="text-xs leading-none text-muted-foreground">{email}</p>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Profile</DropdownMenuItem>
-        <DropdownMenuItem>Billing</DropdownMenuItem>
-        <DropdownMenuItem>Team</DropdownMenuItem>
+        <DropdownMenuItem className="flex gap-1" asChild>
+          <Link href="/profile/dashboard">
+            <Dashboard />
+            Dashboard
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem className="flex gap-1" asChild>
+          <Link href="/profile/orders">
+            <OrderList />
+            My Orders
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem className="flex gap-1" asChild>
+          <Link href="/profile/favorites">
+            <Favorites />
+            Favorites
+          </Link>
+        </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
           <LogOut />

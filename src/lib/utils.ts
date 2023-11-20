@@ -22,3 +22,19 @@ export function getUserEmail({ user }: SiteHeaderProps) {
   );
   return emailObject?.emailAddress;
 }
+
+export function formatPrice(
+  price: number | string,
+  options: {
+    currency?: "USD" | "EUR" | "GBP" | "BDT"
+    notation?: Intl.NumberFormatOptions["notation"]
+  } = {}
+) {
+  const { currency = "EUR", notation = "compact" } = options
+
+  return new Intl.NumberFormat("es-ES", {
+    style: "currency",
+    currency,
+    notation,
+  }).format(Number(price))
+}

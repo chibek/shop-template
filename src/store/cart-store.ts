@@ -2,9 +2,10 @@ import { Product } from "@/db/schema";
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
+interface CartProductInterface  extends Product {quantity: number};
 // Define the interface of the Cart state
 interface State {
-  cart: Product[];
+  cart: CartProductInterface[];
   totalItems: number;
   totalPrice: number;
 }
