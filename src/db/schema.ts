@@ -8,6 +8,7 @@ import {
   timestamp,
   int,
 } from "drizzle-orm/mysql-core";
+import { createInsertSchema } from "drizzle-valibot";
 
 export const products = mysqlTable("products", {
   id: serial("id").notNull().primaryKey(),
@@ -24,3 +25,4 @@ export const products = mysqlTable("products", {
 });
 
 export type Product = typeof products.$inferSelect;
+export const insertProductsSchema = createInsertSchema(products);

@@ -61,5 +61,5 @@ export const useCartStore = create<State & Actions>()(
     },
   }),
   {name: "cart-storage",
-  storage: createJSONStorage(() => sessionStorage),})
+  storage: createJSONStorage(() => localStorage),})
 );

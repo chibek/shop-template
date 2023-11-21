@@ -11,7 +11,35 @@ import { SiteHeaderProps } from "@/components/layouts/site-header";
 import { getUserEmail } from "@/lib/utils";
 import LogOut from "./log-out";
 import Link from "next/link";
-import { Dashboard, Favorites, OrderList } from "@/components/icons";
+import { NavItem } from "../layouts/sidebar-nav";
+import * as Icons from "@/components/icons";
+
+export const avatarOptions: NavItem[] = [
+  {
+    title: "Profile",
+    href: "/profile/dashboard",
+    disabled: false,
+    icon: "Dashboard",
+  },
+  {
+    title: "My orders",
+    href: "/profile/orders",
+    disabled: false,
+    icon: "OrderList",
+  },
+  {
+    title: "Favorites",
+    href: "/profile/favorites",
+    disabled: false,
+    icon: "Favorites",
+  },
+  {
+    title: "Admin",
+    href: "/admin/products",
+    disabled: false,
+    icon: "Dashboard",
+  },
+];
 
 export default function UserAvatar({ user }: SiteHeaderProps) {
   const initials = `${user?.firstName?.charAt(0) ?? ""} ${
@@ -37,24 +65,18 @@ export default function UserAvatar({ user }: SiteHeaderProps) {
           <p className="text-xs leading-none text-muted-foreground">{email}</p>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="flex gap-1" asChild>
-          <Link href="/profile/dashboard">
-            <Dashboard />
-            Dashboard
-          </Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem className="flex gap-1" asChild>
-          <Link href="/profile/orders">
-            <OrderList />
-            My Orders
-          </Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem className="flex gap-1" asChild>
-          <Link href="/profile/favorites">
-            <Favorites />
-            Favorites
-          </Link>
-        </DropdownMenuItem>
+        {avatarOptions.map((item, key) => {
+          const Icon = item.icon ? Icons[item.icon] : Icons["Dashboard"];
+
+          return (
+            <DropdownMenuItem key={key} className="flex gap-1" asChild>
+              <Link href={item.href}>
+                <Icon aria-hidden="true" className="h-4 w-5 flex-none" />
+                {item.title}
+              </Link>
+            </DropdownMenuItem>
+          );
+        })}
         <DropdownMenuSeparator />
         <DropdownMenuItem>
           <LogOut />
