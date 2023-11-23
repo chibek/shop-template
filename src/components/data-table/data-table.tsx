@@ -13,9 +13,26 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { useSearchParams } from "next/navigation";
-import { useMemo, useState } from "react";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
+import { usePathname, useRouter } from "next/navigation";
+import {
+  useEffect,
+  useMemo,
+  useState,
+  useTransition,
+} from "react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "../ui/table";
+import { DataTablePagination } from "./data-table-pagination";
+import { useDataTable } from "@/hooks/useDataTable";
+import { DataTableToolbar } from "./data-table-filters/data-table-toolbar";
+import { useDataTableFilters } from "@/hooks/useDataTableFilters";
+import { useCreateQueryString } from "@/hooks/useCreateQueryString";
 
 export interface Option {
   label: string;
@@ -38,36 +55,25 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
   pageCount: number;
   filterableColumns?: DataTableFilterableColumn<TData>[];
-  searchableColumns?: DataTableSearchableColumn<TData>[];
+  searchableColumns?: DataTableSearchableColumn<TData>;
   newRowLink?: string;
   deleteRowsAction?: React.MouseEventHandler<HTMLButtonElement>;
 }
-
-const validatePageNumber = (value: string, default_page: number) => {
-  const page = Number(value);
-  if (isNaN(page) || page < 1) return default_page;
-  return page;
-};
 
 export function DataTable<TData, TValue>({
   columns,
   data,
   pageCount,
-  filterableColumns = [],
-  searchableColumns = [],
+  searchableColumns,
   newRowLink,
   deleteRowsAction,
+  filterableColumns = [],
 }: DataTableProps<TData, TValue>) {
-    /** hook */
-  const searchParams = useSearchParams();
-  const pageParam = searchParams?.get("page") ?? "1";
-  const per_pageParam = searchParams?.get("per_page") ?? "10";
-  const sortParam = searchParams?.get("sort");
-
-  const page = validatePageNumber(pageParam, 1);
-  const per_page = validatePageNumber(per_pageParam, 10);
-  const [column, order] = sortParam?.split(".") ?? [];
-
+  /** hook */
+  const [pending, startTransition] = useTransition();
+  const { pathname, createQueryString, router } = useCreateQueryString();
+  const {page, per_page, column, order} = useDataTable()
+  
   const [rowSelection, setRowSelection] = useState({});
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -76,13 +82,14 @@ export function DataTable<TData, TValue>({
     pageSize: per_page,
   });
 
+  const {} = useDataTableFilters<TData>({searchableColumns,columnFilters})
   const pagination = useMemo(
     () => ({
       pageIndex,
       pageSize,
     }),
     [pageIndex, pageSize]
-  )
+  );
 
   const [sorting, setSorting] = useState<SortingState>([
     {
@@ -90,6 +97,44 @@ export function DataTable<TData, TValue>({
       desc: order === "desc",
     },
   ]);
+
+  useEffect(() => {
+    setPagination({
+      pageIndex: page - 1,
+      pageSize: per_page,
+    });
+  }, [page, per_page]);
+
+  useEffect(() => {
+    startTransition(() =>
+      router.push(
+        `${pathname}?${createQueryString({
+          page: pageIndex + 1,
+          per_page: pageSize,
+        })}`,
+        {
+          scroll: false,
+        }
+      )
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pageIndex, pageSize]);
+
+  useEffect(() => {
+    router.push(
+      `${pathname}?${createQueryString({
+        page,
+        sort: sorting[0]?.id
+          ? `${sorting[0]?.id}.${sorting[0]?.desc ? "desc" : "asc"}`
+          : null,
+      })}`,
+      {
+        scroll: false,
+      }
+    )
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sorting])
 
   const table = useReactTable({
     data,
@@ -120,16 +165,15 @@ export function DataTable<TData, TValue>({
   });
   /** hook */
 
-
   return (
     <div className="w-full space-y-3 overflow-auto">
-      {/* <DataTableToolbar
+      <DataTableToolbar
         table={table}
         filterableColumns={filterableColumns}
         searchableColumns={searchableColumns}
         newRowLink={newRowLink}
         deleteRowsAction={deleteRowsAction}
-      /> */}
+      />
       <div className="rounded-md border">
         <Table>
           <TableHeader>
@@ -145,7 +189,7 @@ export function DataTable<TData, TValue>({
                             header.getContext()
                           )}
                     </TableHead>
-                  )
+                  );
                 })}
               </TableRow>
             ))}
@@ -180,7 +224,7 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      {/* <DataTablePagination table={table} /> */}
+      <DataTablePagination isPending={pending} table={table} />
     </div>
-  )
+  );
 }

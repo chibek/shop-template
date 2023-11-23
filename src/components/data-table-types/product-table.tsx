@@ -91,5 +91,12 @@ export default function ProductsTable({
     [data]
   );
 
-  return <DataTable columns={columns} data={data} pageCount={pageCount} />;
+  return (
+    <DataTable
+      columns={columns}
+      data={data}
+      pageCount={pageCount}
+      searchableColumns={{id: "name", title: "name"}}
+    />
+  );
 }

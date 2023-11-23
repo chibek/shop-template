@@ -46,3 +46,15 @@ export function formatDate(date: Date | string | number) {
     year: "numeric",
   }).format(new Date(date))
 }
+
+export const paramTonumber = (value: string | null, default_page: number) => {
+  const page = Number(value);
+  if (isNaN(page) || page < 1) return default_page;
+  return page;
+};
+
+export function toSentenceCase(str: string) {
+  return str
+    .replace(/([A-Z])/g, " $1")
+    .replace(/^./, (str) => str.toUpperCase())
+}
