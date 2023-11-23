@@ -1,12 +1,10 @@
 "use client";
 
 import * as React from "react";
-import Link from "next/link";
 import { Cross2Icon, PlusCircledIcon, TrashIcon } from "@radix-ui/react-icons";
 import type { Table } from "@tanstack/react-table";
 
-import { cn } from "@/lib/utils";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { DataTableViewOptions } from "@/components/data-table/data-table-filters/data-table-view-options";
 import { DataTableFacetedFilter } from "./data-table-facete-filter";
@@ -26,8 +24,8 @@ export function DataTableToolbar<TData>({
   table,
   newRowLink,
   deleteRowsAction,
-  filterableColumns = [],
   searchableColumns,
+  filterableColumns = [],
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0;
   const [isPending, startTransition] = React.useTransition();
@@ -35,24 +33,24 @@ export function DataTableToolbar<TData>({
   const column = searchableColumns ? String(searchableColumns.id) : "";
   const searchParam = searchParams.get(column);
 
-  const tableColumn =  table.getColumn(column);
-  const columnValue = tableColumn?.getFilterValue() as string ?? "";
+  const tableColumn = table.getColumn(column);
+  const columnValue = (tableColumn?.getFilterValue() as string) ?? "";
   const [searchValue, setSearchValue] = React.useState(columnValue);
   const debounceSearchValue = useDebounce<string>(searchValue, 250);
 
-
-  React.useEffect(()=> {
-    setSearchValue(searchParam ?? "")
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  React.useEffect(() => {
+    setSearchValue(searchParam ?? "");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  React.useEffect(()=> {
-    tableColumn?.setFilterValue(debounceSearchValue)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [debounceSearchValue])
+  React.useEffect(() => {
+    tableColumn?.setFilterValue(debounceSearchValue);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debounceSearchValue]);
 
-  
-  const handlerOnChangeSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handlerOnChangeSearch = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setSearchValue(event.target.value);
   };
 
@@ -64,14 +62,13 @@ export function DataTableToolbar<TData>({
     <div className="flex w-full items-center justify-between space-x-2 overflow-auto p-1">
       <div className="flex flex-1 items-center space-x-2">
         {searchableColumns && (
-              <Input
-              placeholder={`Filter ${searchableColumns.title}...`}
-              value={searchValue}
-              onChange={handlerOnChangeSearch}
-              className="h-8 w-[150px] lg:w-[250px]"
-            />  
-              )
-          }
+          <Input
+            placeholder={`Filter ${searchableColumns.title}...`}
+            value={searchValue}
+            onChange={handlerOnChangeSearch}
+            className="h-8 w-[150px] lg:w-[250px]"
+          />
+        )}
         {filterableColumns.length > 0 &&
           filterableColumns.map(
             (column) =>
@@ -124,9 +121,9 @@ export function DataTableToolbar<TData>({
                   className: "h-8",
                 })
               )}
-            >
-              <PlusCircledIcon className="mr-2 h-4 w-4" aria-hidden="true" />
-              New
+          >
+            <PlusCircledIcon className="mr-2 h-4 w-4" aria-hidden="true" />
+            New
             </div>
           </Link>
         ) : null}

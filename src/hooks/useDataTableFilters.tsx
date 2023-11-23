@@ -1,15 +1,13 @@
-import { DataTableFilterableColumn, DataTableSearchableColumn } from "@/types";
+import { DataTableSearchableColumn } from "@/types";
 import { useCreateQueryString } from "./useCreateQueryString";
 import { ColumnFiltersState } from "@tanstack/react-table";
 import { useEffect } from "react";
 
 interface DataTableFilters<TData> {
-  filterableColumns?: DataTableFilterableColumn<TData>[];
   searchableColumns?: DataTableSearchableColumn<TData>;
   columnFilters: ColumnFiltersState;
 }
-export function useDataTableFilters<TData>({
-  filterableColumns = [],
+export function useSearchFilter<TData>({
   searchableColumns,
   columnFilters,
 }: DataTableFilters<TData>) {
@@ -48,6 +46,4 @@ export function useDataTableFilters<TData>({
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [column]
   );
-
-  return {};
 }

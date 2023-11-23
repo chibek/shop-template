@@ -3,7 +3,7 @@ import { db } from "@/db";
 import { Product, products } from "@/db/schema";
 import { paramTonumber } from "@/lib/utils";
 import { dashboardProductsSearchParamsSchema } from "@/lib/validations/params";
-import { sql,asc, desc, } from "drizzle-orm";
+import { sql,asc, desc, and, like, } from "drizzle-orm";
 import { parse } from "valibot";
 
 interface ProductsPageProps {
@@ -15,7 +15,7 @@ interface ProductsPageProps {
 export default async function ProductsPage({
   searchParams,
 }: ProductsPageProps) {
-  const { page, per_page, sort } = parse(dashboardProductsSearchParamsSchema, searchParams);
+  const { page, per_page, sort, name } = parse(dashboardProductsSearchParamsSchema, searchParams);
   const limit = paramTonumber(per_page, 10);
   const offset = (paramTonumber(page, 1) - 1) * limit;
   
@@ -26,11 +26,14 @@ export default async function ProductsPage({
 
 
   const { queryProducts, count } = await db.transaction(async (tx) => {
-    const queryProducts = await db
+    const queryProducts = await tx
       .select()
       .from(products)
       .limit(limit)
       .offset(offset)
+      .where(
+        and(name ? like(products.name, `%${name}%`) : undefined,)
+      )
       .orderBy(
         column && column in products
           ? order === "asc"
@@ -39,9 +42,12 @@ export default async function ProductsPage({
           : desc(products.createdAt)
       );
 
-    const count = await db
+    const count = await tx
       .select({ count: sql<number>`count(${products.id})` })
       .from(products)
+      .where(
+        and(name ? like(products.name, `%${name}%`) : undefined,)
+      )
       .then((res) => res[0]?.count ?? 0);
 
     return {

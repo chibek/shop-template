@@ -3,11 +3,11 @@
 import { DataTable } from "@/components/data-table/data-table";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-header";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Separator } from "@/components/ui/separator";
 import { Product } from "@/db/schema";
 import { formatDate, formatPrice } from "@/lib/utils";
 import { ColumnDef } from "@tanstack/react-table";
 import { useMemo, useState } from "react";
+import NewProductForm from "../forms/new-product";
 
 interface ProductsTableShellProps {
   data: Product[];

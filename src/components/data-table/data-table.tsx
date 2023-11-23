@@ -13,13 +13,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { usePathname, useRouter } from "next/navigation";
-import {
-  useEffect,
-  useMemo,
-  useState,
-  useTransition,
-} from "react";
+import { useEffect, useMemo, useState, useTransition } from "react";
 import {
   Table,
   TableBody,
@@ -31,8 +25,10 @@ import {
 import { DataTablePagination } from "./data-table-pagination";
 import { useDataTable } from "@/hooks/useDataTable";
 import { DataTableToolbar } from "./data-table-filters/data-table-toolbar";
-import { useDataTableFilters } from "@/hooks/useDataTableFilters";
+import { useSearchFilter } from "@/hooks/useDataTableFilters";
 import { useCreateQueryString } from "@/hooks/useCreateQueryString";
+import { cn } from "@/lib/utils";
+import { DataTableNewElement } from "./data-table-new-element";
 
 export interface Option {
   label: string;
@@ -69,11 +65,10 @@ export function DataTable<TData, TValue>({
   deleteRowsAction,
   filterableColumns = [],
 }: DataTableProps<TData, TValue>) {
-  /** hook */
   const [pending, startTransition] = useTransition();
   const { pathname, createQueryString, router } = useCreateQueryString();
-  const {page, per_page, column, order} = useDataTable()
-  
+  const { page, per_page, column, order } = useDataTable();
+
   const [rowSelection, setRowSelection] = useState({});
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -82,7 +77,8 @@ export function DataTable<TData, TValue>({
     pageSize: per_page,
   });
 
-  const {} = useDataTableFilters<TData>({searchableColumns,columnFilters})
+  useSearchFilter<TData>({ searchableColumns, columnFilters });
+
   const pagination = useMemo(
     () => ({
       pageIndex,
@@ -131,10 +127,10 @@ export function DataTable<TData, TValue>({
       {
         scroll: false,
       }
-    )
+    );
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sorting])
+  }, [sorting]);
 
   const table = useReactTable({
     data,
@@ -163,68 +159,67 @@ export function DataTable<TData, TValue>({
     manualSorting: true,
     manualFiltering: true,
   });
-  /** hook */
 
   return (
     <div className="w-full space-y-3 overflow-auto">
-      <DataTableToolbar
-        table={table}
-        filterableColumns={filterableColumns}
-        searchableColumns={searchableColumns}
+        <DataTableToolbar
+          table={table}
+          filterableColumns={filterableColumns}
+          searchableColumns={searchableColumns}
         newRowLink={newRowLink}
-        deleteRowsAction={deleteRowsAction}
-      />
-      <div className="rounded-md border">
-        <Table>
-          <TableHeader>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead key={header.id} className="whitespace-nowrap">
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
-                  );
-                })}
-              </TableRow>
-            ))}
-          </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
+          deleteRowsAction={deleteRowsAction}
+        />
+        <div className="rounded-md border">
+          <Table>
+            <TableHeader>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <TableRow key={headerGroup.id}>
+                  {headerGroup.headers.map((header) => {
+                    return (
+                      <TableHead key={header.id} className="whitespace-nowrap">
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                      </TableHead>
+                    );
+                  })}
                 </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
-                  No results.
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
-      </div>
-      <DataTablePagination isPending={pending} table={table} />
+              ))}
+            </TableHeader>
+            <TableBody>
+              {table.getRowModel().rows?.length ? (
+                table.getRowModel().rows.map((row) => (
+                  <TableRow
+                    key={row.id}
+                    data-state={row.getIsSelected() && "selected"}
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell
+                    colSpan={columns.length}
+                    className="h-24 text-center"
+                  >
+                    No results.
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </div>
+        <DataTablePagination isPending={pending} table={table} />
     </div>
   );
 }

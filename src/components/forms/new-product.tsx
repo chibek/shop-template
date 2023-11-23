@@ -1,3 +1,5 @@
+"use client"
+
 import { Output } from "valibot";
 import { insertProductsSchema } from "@/db/schema";
 import { useForm } from "react-hook-form";
@@ -28,7 +30,7 @@ export default function NewProductForm() {
       <form
         className="grid gap-4"
         onSubmit={(...args) => void form.handleSubmit(onSubmit)(...args)}
-      ></form>
+      >holi</form>
     </Form>
   );
 }
