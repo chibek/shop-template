@@ -23,6 +23,7 @@ export default function NumberInput({ disabled, value, min }: InputProps) {
         <span className="sr-only">Remove one item</span>
       </Button>
       <Input
+        id="custom-input-number"
         type="number"
         value={value}
         className="h-8 w-12 rounded-none"

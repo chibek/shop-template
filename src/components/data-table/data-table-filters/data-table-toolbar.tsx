@@ -4,13 +4,15 @@ import * as React from "react";
 import { Cross2Icon, PlusCircledIcon, TrashIcon } from "@radix-ui/react-icons";
 import type { Table } from "@tanstack/react-table";
 
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { DataTableViewOptions } from "@/components/data-table/data-table-filters/data-table-view-options";
 import { DataTableFacetedFilter } from "./data-table-facete-filter";
 import { DataTableFilterableColumn, DataTableSearchableColumn } from "@/types";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useSearchParams } from "next/navigation";
+import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
@@ -56,7 +58,7 @@ export function DataTableToolbar<TData>({
 
   const resetHandler = () => {
     setSearchValue("");
-  }
+  };
 
   return (
     <div className="flex w-full items-center justify-between space-x-2 overflow-auto p-1">
@@ -121,9 +123,9 @@ export function DataTableToolbar<TData>({
                   className: "h-8",
                 })
               )}
-          >
-            <PlusCircledIcon className="mr-2 h-4 w-4" aria-hidden="true" />
-            New
+            >
+              <PlusCircledIcon className="mr-2 h-4 w-4" aria-hidden="true" />
+              New
             </div>
           </Link>
         ) : null}

@@ -97,6 +97,7 @@ export default function ProductsTable({
       data={data}
       pageCount={pageCount}
       searchableColumns={{id: "name", title: "name"}}
+      newRowLink="/admin/products/new"
     />
   );
 }

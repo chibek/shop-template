@@ -27,8 +27,6 @@ import { useDataTable } from "@/hooks/useDataTable";
 import { DataTableToolbar } from "./data-table-filters/data-table-toolbar";
 import { useSearchFilter } from "@/hooks/useDataTableFilters";
 import { useCreateQueryString } from "@/hooks/useCreateQueryString";
-import { cn } from "@/lib/utils";
-import { DataTableNewElement } from "./data-table-new-element";
 
 export interface Option {
   label: string;
