@@ -120,6 +120,9 @@
   .zoom-image [data-rmiz-modal-overlay="visible"] {
     @apply bg-background/10 backdrop-blur;
   }
+  .zoom-image [data-rmiz-content] {
+    @apply cursor-default;
+  }
 
   .zoom-image [data-rmiz-modal-img] {
     @apply rounded-md lg:rounded-2xl;

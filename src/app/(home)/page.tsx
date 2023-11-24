@@ -15,7 +15,7 @@ export default async function Home() {
           around the world with ease
         </p>
       </section>
-      <section className="grid grid-cols-4">
+      <section className="grid grid-cols-4 gap-4">
         {queryProducts.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}

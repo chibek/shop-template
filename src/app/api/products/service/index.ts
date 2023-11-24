@@ -23,6 +23,7 @@ export async function checkProductName(input: { name: string; id?: number }) {
 export async function addProduct(rawInput: Output<typeof addProductSchema>) {
   try {
     const inputParsed = parse(addProductSchema, rawInput);
+    console.log({inputParsed})
     await db.insert(products).values({
       ...inputParsed,
     });

@@ -18,7 +18,7 @@ export const products = mysqlTable("products", {
     .notNull(),
   rating: int("rating").default(0).notNull(),
   stock: int("inventory").default(0).notNull(),
-  thumbnail: varchar("thumbnail", { length: 191 }).default("null"),
+  thumbnail: varchar("thumbnail", { length: 191 }),
   images: json("images").default("null"),
   createdAt: timestamp("createdAt", { mode: "string" }).defaultNow(),
 });

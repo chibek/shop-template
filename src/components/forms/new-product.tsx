@@ -3,7 +3,7 @@
 import { Output } from "valibot";
 import { useForm } from "react-hook-form";
 import { valibotResolver } from "@hookform/resolvers/valibot";
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import {
   Form,
   FormControl,
@@ -20,7 +20,7 @@ import { Separator } from "../ui/separator";
 import Image from "next/image";
 import { ZoomImage } from "../zoom-image";
 import { addProduct, checkProductName } from "@/app/api/products/service";
-import { catchError, isArrayOfFile } from "@/lib/utils";
+import { catchError, cn, isArrayOfFile } from "@/lib/utils";
 import { toast } from "sonner";
 import { productSchema } from "@/lib/validations/product";
 import { useUploadThing } from "@/lib/uploadthing";
@@ -30,6 +30,7 @@ type SchemaType = Output<typeof productSchema>;
 export default function NewProductForm() {
   const [isPending, startTransition] = useTransition();
   const [files, setFiles] = useState<FileWithPreview[] | null>(null);
+  const [thumbnail, setThumbnail] = useState<FileWithPreview | null>(null);
   const { isUploading, startUpload } = useUploadThing("productImage");
 
   // react-hook-form
@@ -50,15 +51,26 @@ export default function NewProductForm() {
           name: data.name,
         });
         if (isArrayOfFile(data.images)) {
-          let formattedImages = null;
           toast.promise(
             async () => {
               const uploadthing = await startUpload(data.images);
-              formattedImages = uploadthing?.map((image) => ({
-                id: image.key,
-                name: image.key.split("_")[1] ?? image.key,
-                url: image.url,
-              }));
+              let thumbnailImage = null;
+              const formattedImages = uploadthing?.map((image) => {
+                const imageObject = {
+                  id: image.key,
+                  name: image.key.split("_")[1] ?? image.key,
+                  url: image.url,
+                };
+                if (thumbnail?.name === image.name) {
+                  thumbnailImage = imageObject.url;
+                }
+                return imageObject;
+              });
+              addProduct({
+                ...data,
+                images: formattedImages ?? null,
+                thumbnail: thumbnailImage,
+              });
             },
             {
               loading: "Uploading images...",
@@ -66,11 +78,6 @@ export default function NewProductForm() {
               error: "Error uploading images.",
             }
           );
-
-          addProduct({
-            ...data,
-            images: formattedImages,
-          });
         } else {
           await addProduct({
             ...data,
@@ -87,6 +94,13 @@ export default function NewProductForm() {
       }
     });
   }
+
+  useEffect(() => {
+    if (files && files.length > 0 && !thumbnail) {
+      setThumbnail(files[0] ? files[0] : null);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [files]);
 
   return (
     <>
@@ -127,8 +141,11 @@ export default function NewProductForm() {
               placeholder="Type product stock here."
             />
           </div>
-          <FormItem className="flex w-full flex-col gap-1.5 items-start">
+          <FormItem className="flex w-full flex-col gap-1.5">
             <FormLabel>Images</FormLabel>
+            <p className="text-muted-foreground text-sm">
+              Select your thumbnail
+            </p>
             {files?.length ? (
               <div className="flex items-center gap-2">
                 {files.map((file, i) => (
@@ -136,9 +153,17 @@ export default function NewProductForm() {
                     <Image
                       src={file.preview}
                       alt={file.name}
-                      className="h-20 w-20 shrink-0 rounded-md object-cover object-center"
+                      className={cn(
+                        "h-20 w-20 shrink-0 rounded-md object-cover object-center hover:cursor-pointer",
+                        {
+                          "ring-2 ring-blue-600": thumbnail
+                            ? thumbnail.name === file.name
+                            : false,
+                        }
+                      )}
                       width={80}
                       height={80}
+                      onClick={() => setThumbnail(file)}
                     />
                   </ZoomImage>
                 ))}
@@ -162,12 +187,13 @@ export default function NewProductForm() {
           </FormItem>
           <Separator />
           <Button disabled={isPending || isUploading} className="w-fit">
-            {isPending || isUploading && (
-              <Spinner
-                className="mr-2 h-4 w-4 animate-spin"
-                aria-hidden="true"
-              />
-            )}
+            {isPending ||
+              (isUploading && (
+                <Spinner
+                  className="mr-2 h-4 w-4 animate-spin"
+                  aria-hidden="true"
+                />
+              ))}
             Add Product
             <span className="sr-only">Add Product</span>
           </Button>
