@@ -9,7 +9,7 @@ import { Toaster } from "sonner";
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import { extractRouterConfig } from "uploadthing/server";
 
-import { ourFileRouter } from "@/app/api/uploadthing/core";
+import { uploadRouter } from "@/server/uploadthing";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -29,10 +29,10 @@ export default function RootLayout({
     >
       <html lang="en">
         <body className={cn(GeistSans.className, "dark min-h-screen")}>
-          {children}
           <TailwindIndicator />
           <Toaster richColors={true} />
-          <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
+          <NextSSRPlugin routerConfig={extractRouterConfig(uploadRouter)} />
+          {children}
         </body>
       </html>
     </ClerkProvider>
