@@ -1,3 +1,4 @@
+import { StoredFile } from "@/types";
 import {
   mysqlTable,
   serial,
@@ -19,7 +20,7 @@ export const products = mysqlTable("products", {
   rating: int("rating").default(0).notNull(),
   stock: int("inventory").default(0).notNull(),
   thumbnail: varchar("thumbnail", { length: 191 }),
-  images: json("images").default("null"),
+  images: json("images").$type<StoredFile[] | null>().default(null),
   createdAt: timestamp("createdAt", { mode: "string" }).defaultNow(),
 });
 

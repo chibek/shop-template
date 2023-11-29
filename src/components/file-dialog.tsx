@@ -1,6 +1,6 @@
 import { Cross2Icon, TrashIcon, UploadIcon } from "@radix-ui/react-icons";
-import { Button } from "./ui/button";
-import { Dialog, DialogContent, DialogTrigger } from "./ui/dialog";
+import { Button, buttonVariants } from "./ui/button";
+import { Dialog, DialogClose, DialogContent, DialogTrigger } from "./ui/dialog";
 import type {
   FieldPath,
   FieldValues,
@@ -83,9 +83,9 @@ export function FileDialog<TFieldValues extends FieldValues>({
   });
 
   useEffect(() => {
-    setValue(name, files as PathValue<TFieldValues, Path<TFieldValues>>)
+    setValue(name, files as PathValue<TFieldValues, Path<TFieldValues>>);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [files])
+  }, [files]);
 
   return (
     <Dialog>
@@ -152,17 +152,31 @@ export function FileDialog<TFieldValues extends FieldValues>({
           </div>
         ) : null}
         {files?.length ? (
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            className="mt-2.5 w-full"
-            onClick={() => setFiles(null)}
-          >
-            <TrashIcon className="mr-2 h-4 w-4" aria-hidden="true" />
-            Remove All
-            <span className="sr-only">Remove all</span>
-          </Button>
+          <div className="flex items-center gap-2">
+            <DialogClose
+              className={cn(
+                "mt-2.5 w-full",
+                buttonVariants({
+                  variant: "outline",
+                  size: "sm",
+                })
+              )}
+            >
+              Done
+              <span className="sr-only">Done</span>
+            </DialogClose>
+            <Button
+              type="button"
+              variant="destructive"
+              size="sm"
+              className="mt-2.5 w-full"
+              onClick={() => setFiles(null)}
+            >
+              <TrashIcon className="mr-2 h-4 w-4" aria-hidden="true" />
+              Remove All
+              <span className="sr-only">Remove all</span>
+            </Button>
+          </div>
         ) : null}
       </DialogContent>
     </Dialog>

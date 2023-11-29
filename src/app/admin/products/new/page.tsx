@@ -1,10 +1,9 @@
-import NewProductForm from "@/components/forms/new-product";
-import { Button, buttonVariants } from "@/components/ui/button";
+import NewProductForm from "@/components/forms/create-product";
+import { buttonVariants } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";

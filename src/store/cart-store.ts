@@ -2,7 +2,9 @@ import { Product } from "@/db/schema";
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
-interface CartProductInterface  extends Product {quantity: number};
+interface CartProductInterface extends Product {
+  quantity: number;
+}
 // Define the interface of the Cart state
 interface State {
   cart: CartProductInterface[];
@@ -14,6 +16,7 @@ interface State {
 interface Actions {
   addToCart: (Item: Product) => void;
   removeFromCart: (Item: Product) => void;
+  removeAllFromCart: (Item: Product) => void;
 }
 
 // Initialize a default state
@@ -24,42 +27,68 @@ const INITIAL_STATE: State = {
 };
 
 export const useCartStore = create<State & Actions>()(
-  persist((set, get) => ({
-    cart: INITIAL_STATE.cart,
-    totalItems: INITIAL_STATE.totalItems,
-    totalPrice: INITIAL_STATE.totalPrice,
-    addToCart: (product: Product) => {
-      const cart = get().cart;
-      const cartItem = cart.find((item) => item.id === product.id);
+  persist(
+    (set, get) => ({
+      cart: INITIAL_STATE.cart,
+      totalItems: INITIAL_STATE.totalItems,
+      totalPrice: INITIAL_STATE.totalPrice,
+      addToCart: (product: Product) => {
+        const cart = get().cart;
+        const cartItem = cart.find((item) => item.id === product.id);
 
-      // If the item already exists in the Cart, increase its quantity
-      if (cartItem) {
-        const updatedCart = cart.map((item) =>
-          item.id === product.id ? { ...item, quantity: item.stock + 1 } : item
-        );
+        // If the item already exists in the Cart, increase its quantity
+        if (cartItem) {
+          const updatedCart = cart.map((item) =>
+            item.id === product.id
+              ? { ...item, quantity: item.quantity + 1 }
+              : item
+          );
+          set((state) => ({
+            cart: updatedCart,
+            totalItems: state.totalItems + 1,
+            totalPrice: state.totalPrice + Number(product.price),
+          }));
+        } else {
+          const updatedCart = [...cart, { ...product, quantity: 1 }];
+
+          set((state) => ({
+            cart: updatedCart,
+            totalItems: state.totalItems + 1,
+            totalPrice: state.totalPrice + Number(product.price),
+          }));
+        }
+      },
+      removeFromCart: (product: Product) => {
+        const cart = get().cart;
+        const updatedCart = cart
+          .map((item) =>
+            item.id === product.id
+              ? { ...item, quantity: item.quantity - 1 }
+              : item
+          )
+          .filter((item) => item.quantity > 0);
+
         set((state) => ({
           cart: updatedCart,
-          totalItems: state.totalItems + 1,
-          totalPrice: state.totalPrice + Number(product.price),
+          totalItems: state.totalItems - 1,
+          totalPrice: state.totalPrice - Number(product.price),
         }));
-      } else {
-        const updatedCart = [...cart, { ...product, quantity: 1 }];
+      },
+      removeAllFromCart: (product: Product) => {
+        const cart = get().cart;
+        let quantity = 0;
+        const filteredProducts = cart.filter((item) => {
+          quantity = item.quantity;
+          return item.id !== product.id;
+        });
 
         set((state) => ({
-          cart: updatedCart,
-          totalItems: state.totalItems + 1,
-          totalPrice: state.totalPrice + Number(product.price),
+          cart: filteredProducts,
+          totalItems: state.totalItems - quantity,
+          totalPrice: state.totalPrice - Number(product.price) * quantity,
         }));
-      }
-    },
-    removeFromCart: (product: Product) => {
-      set((state) => ({
-        cart: state.cart.filter((item) => item.id !== product.id),
-        totalItems: state.totalItems - 1,
-        totalPrice: state.totalPrice - Number(product.price),
-      }));
-    },
-  }),
-  {name: "cart-storage",
-  storage: createJSONStorage(() => localStorage),})
+      },
+    }),
+    { name: "cart-storage", storage: createJSONStorage(() => localStorage) }
+  )
 );

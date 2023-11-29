@@ -32,7 +32,7 @@ export default function CartSheet() {
   const { totalItems, cart, totalPrice } = cartStore;
 
   return (
-    <Sheet  >
+    <Sheet>
       <SheetTrigger asChild>
         <Button
           aria-label="Open cart"

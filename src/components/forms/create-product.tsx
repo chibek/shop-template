@@ -103,11 +103,10 @@ export default function NewProductForm() {
   }, [files]);
 
   return (
-    <>
       <Form {...form}>
         <form
           className="grid w-full max-w-2xl gap-5"
-          onSubmit={(...args) => void form.handleSubmit(onSubmit)(...args)}
+          onSubmit={form.handleSubmit(onSubmit)}
         >
           <CustomInput
             control={form.control}
@@ -143,9 +142,11 @@ export default function NewProductForm() {
           </div>
           <FormItem className="flex w-full flex-col gap-1.5">
             <FormLabel>Images</FormLabel>
-            <p className="text-muted-foreground text-sm">
-              Select your thumbnail
-            </p>
+            {files?.length ? (
+              <p className="text-muted-foreground text-sm">
+                Select your thumbnail
+              </p>
+            ) : null}
             {files?.length ? (
               <div className="flex items-center gap-2">
                 {files.map((file, i) => (
@@ -186,7 +187,13 @@ export default function NewProductForm() {
             />
           </FormItem>
           <Separator />
-          <Button disabled={isPending || isUploading} className="w-fit">
+          <Button
+            disabled={isPending || isUploading}
+            onClick={() =>
+              void form.trigger(["name", "description", "price", "stock"])
+            }
+            className="w-fit"
+          >
             {isPending ||
               (isUploading && (
                 <Spinner
@@ -199,6 +206,5 @@ export default function NewProductForm() {
           </Button>
         </form>
       </Form>
-    </>
   );
 }

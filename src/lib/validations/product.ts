@@ -45,3 +45,8 @@ export const addProductSchema = object({
     )
   ),
 });
+
+export const extendedProductSchemaWithId = object({
+  ...addProductSchema.entries,
+  id: number(),
+})

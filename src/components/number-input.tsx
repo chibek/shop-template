@@ -1,15 +1,26 @@
-"use client"
+"use client";
 import { MinusIcon, PlusIcon } from "@radix-ui/react-icons";
 import { Button } from "./ui/button";
 import { Input, InputProps } from "./ui/input";
 import { ChangeEvent, useId } from "react";
 
-export default function NumberInput({ disabled, value, min }: InputProps) {
+interface NumberInputProps extends InputProps {
+  increment: () => void;
+  decrement: () => void;
+}
+
+export default function NumberInput({
+  disabled,
+  value,
+  min,
+  increment,
+  decrement,
+}: NumberInputProps) {
   const id = useId();
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     console.log(event.target.value);
   };
-  
+
   return (
     <div className="flex items-center">
       <Button
@@ -18,6 +29,7 @@ export default function NumberInput({ disabled, value, min }: InputProps) {
         size="icon"
         className="h-8 w-8 rounded-r-none border-r-0"
         disabled={disabled}
+        onClick={decrement}
       >
         <MinusIcon className="h-3 w-3" aria-hidden="true" />
         <span className="sr-only">Remove one item</span>
@@ -38,6 +50,7 @@ export default function NumberInput({ disabled, value, min }: InputProps) {
         size="icon"
         className="h-8 w-8 rounded-l-none border-l-0"
         disabled={disabled}
+        onClick={increment}
       >
         <PlusIcon className="h-3 w-3" aria-hidden="true" />
         <span className="sr-only">Add one item</span>
