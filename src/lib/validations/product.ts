@@ -29,6 +29,10 @@ export const productSchema = createInsertSchema(products, {
   ),
 });
 
+export const getProductSchema = object({
+  id: number(),
+})
+
 export const addProductSchema = object({
   ...productSchema.entries,
   images: nullable(

@@ -79,15 +79,28 @@ export function isArrayOfFile(files: unknown): files is File[] {
   return files.every((file) => file instanceof File)
 }
 
-export function catchError(err: unknown) {
-  if (err instanceof ValiError) {
-    const errors = err.issues.map((issue) => {
+export function catchError(error: unknown) {
+  if (error instanceof ValiError) {
+    const errors = error.issues.map((issue) => {
       return issue.message
     })
     return toast.error(errors.join("\n"))
-  } else if (err instanceof Error) {
-    return toast.error(err.message)
+  } else if (error instanceof Error) {
+    return toast.error(error.message)
   } else {
     return toast.error("Something went wrong, please try again later.")
+  }
+}
+
+export function catchPromiseError(error: unknown) {
+  if (error instanceof ValiError) {
+    const errors = error.issues.map((issue) => {
+      return issue.message
+    })
+    return errors.join("\n")
+  } else if (error instanceof Error) {
+    return error.message
+  } else {
+    return "Something went wrong, please try again later."
   }
 }
