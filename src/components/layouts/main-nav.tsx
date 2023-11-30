@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import type * as NavigationMenuPrimitive from "@radix-ui/react-navigation-menu"
 
-const components: { title: string; href: string; description: string }[] = [
+export const components: { title: string; href: string; description: string }[] = [
   {
     title: "Alert Dialog",
     href: "/docs/primitives/alert-dialog",
@@ -55,7 +55,7 @@ const components: { title: string; href: string; description: string }[] = [
 
 export function MainNav({className} : React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Root>) {
   return (
-    <NavigationMenu className={className}>
+    <NavigationMenu className={cn(className,"hidden sm:flex")}>
       <NavigationMenuList>
         <NavigationMenuItem>
           <NavigationMenuTrigger>Getting started</NavigationMenuTrigger>
