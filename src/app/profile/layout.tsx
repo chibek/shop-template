@@ -1,7 +1,8 @@
 import { avatarOptions } from "@/components/avatar/avatar";
 import { SidebarNav } from "@/components/layouts/sidebar-nav";
 import { SiteHeader } from "@/components/layouts/site-header";
-import { currentUser } from "@clerk/nextjs";
+import { checkUserRole } from "@/lib/utils";
+import { currentUser, useSession } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
 
@@ -9,7 +10,9 @@ export default async function ProfileLayout({
   children,
 }: React.PropsWithChildren) {
   const user = await currentUser();
-
+  const { session } = useSession();
+  const userRole = checkUserRole(session);
+  console.log({userRole})
   if (!user) {
     redirect("/signin");
   }

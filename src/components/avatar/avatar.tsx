@@ -1,3 +1,9 @@
+import Link from "next/link"
+import { useSession } from "@clerk/nextjs"
+
+import { UserRoleValues } from "@/lib/constants"
+import { checkUserRole, getUserEmail } from "@/lib/utils"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -5,14 +11,12 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { AvatarImage, Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { type SiteHeaderProps } from "@/components/layouts/site-header";
-import { getUserEmail } from "@/lib/utils";
-import LogOut from "./log-out";
-import Link from "next/link";
-import { type NavItem } from "../layouts/sidebar-nav";
-import * as Icons from "@/components/icons";
+} from "@/components/ui/dropdown-menu"
+import * as Icons from "@/components/icons"
+import { type SiteHeaderProps } from "@/components/layouts/site-header"
+
+import { type NavItem } from "../layouts/sidebar-nav"
+import LogOut from "./log-out"
 
 export const avatarOptions: NavItem[] = [
   {
@@ -38,15 +42,16 @@ export const avatarOptions: NavItem[] = [
     href: "/admin/products",
     disabled: false,
     icon: "Dashboard",
+    role: UserRoleValues.ADMIN,
   },
-];
+]
 
 export default function UserAvatar({ user }: SiteHeaderProps) {
   const initials = `${user?.firstName?.charAt(0) ?? ""} ${
     user?.lastName?.charAt(0) ?? ""
-  }`;
-  const email = getUserEmail({ user });
-
+  }`
+  const email = getUserEmail({ user })
+  const userRole = user?.privateMetadata.role
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -66,8 +71,10 @@ export default function UserAvatar({ user }: SiteHeaderProps) {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         {avatarOptions.map((item, key) => {
-          const Icon = item.icon ? Icons[item.icon] : Icons["Dashboard"];
-
+          if (item.role && item.role !== userRole) {
+            return null
+          }
+          const Icon = item.icon ? Icons[item.icon] : Icons["Dashboard"]
           return (
             <DropdownMenuItem key={key} className="flex gap-1" asChild>
               <Link href={item.href}>
@@ -75,7 +82,7 @@ export default function UserAvatar({ user }: SiteHeaderProps) {
                 {item.title}
               </Link>
             </DropdownMenuItem>
-          );
+          )
         })}
         <DropdownMenuSeparator />
         <DropdownMenuItem>
@@ -83,5 +90,5 @@ export default function UserAvatar({ user }: SiteHeaderProps) {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  );
+  )
 }

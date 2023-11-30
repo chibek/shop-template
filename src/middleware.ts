@@ -1,14 +1,14 @@
-import { authMiddleware, clerkClient } from "@clerk/nextjs";
 import { NextResponse } from "next/server"
-import type { UserRole } from "./types";
+import { authMiddleware, clerkClient } from "@clerk/nextjs"
+
+import { UserRoleValues } from "./lib/constants"
+import { isPrivateRoute } from "./lib/utils"
+import type { UserRole } from "./types"
+
+const privateRoutes = ["/admin(.*)"] as const
 
 export default authMiddleware({
-  publicRoutes: [
-    "/",
-    "/signin(.*)",
-    "/signup(.*)",
-    "/api(.*)",
-  ],
+  publicRoutes: ["/", "/signin(.*)", "/signup(.*)", "/api(.*)"],
   async afterAuth(auth, req) {
     if (auth.isPublicRoute) {
       //  For public routes, we don't need to do anything
@@ -16,7 +16,6 @@ export default authMiddleware({
     }
 
     const url = new URL(req.nextUrl.origin)
-
     if (!auth.userId) {
       //  If user tries to access a private route without being authenticated,
       //  redirect them to the sign in page
@@ -39,11 +38,16 @@ export default authMiddleware({
         },
       })
     }
-  }
-},
-);
- 
+
+    if (isPrivateRoute(privateRoutes, req.nextUrl.pathname)) {
+      if (user.privateMetadata.role !== UserRoleValues.ADMIN) {
+        url.pathname = "/"
+        return NextResponse.redirect(url)
+      }
+    }
+  },
+})
+
 export const config = {
   matcher: ["/((?!.*\\..*|_next).*)", "/", "/(api|trpc)(.*)"],
-};
- 
+}

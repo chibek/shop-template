@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import * as Icons from "@/components/icons";
 import { useSelectedLayoutSegment } from "next/navigation";
+import { type UserRole } from "@/types";
 
 export interface NavItem {
   title: string;
@@ -13,6 +14,7 @@ export interface NavItem {
   icon?: keyof typeof Icons;
   label?: string;
   description?: string;
+  role?: UserRole;
 }
 
 export interface SidebarNavProps extends React.HTMLAttributes<HTMLDivElement> {

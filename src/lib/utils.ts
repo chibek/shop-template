@@ -1,4 +1,5 @@
 import { isClerkAPIResponseError } from "@clerk/nextjs"
+import { ActiveSessionResource } from "@clerk/types"
 import { clsx, type ClassValue } from "clsx"
 import { toast } from "sonner"
 import { twMerge } from "tailwind-merge"
@@ -104,4 +105,42 @@ export function catchPromiseError(error: unknown) {
   } else {
     return "Something went wrong, please try again later."
   }
+}
+
+export function checkUserRole(
+  session: ActiveSessionResource | null | undefined
+) {
+  console.log("dsadsada", session)
+  if (
+    !session ||
+    !session.user ||
+    !session.user.organizationMemberships ||
+    session.user.organizationMemberships.length === 0
+  ) {
+    return null // Return null if the user is not a basic member
+  }
+
+  const organizationMemberships = session.user.organizationMemberships
+
+  // Loop through all organization memberships
+  for (const membership of organizationMemberships) {
+    if (membership.role) {
+      return membership.role.toLowerCase() // Return the role in lowercase if it exists
+    }
+  }
+
+  return null // Return null if no role is found in the memberships
+}
+
+export function isPrivateRoute(
+  privateRoutes: readonly string[],
+  nextRoute: string
+) {
+  for (const privateRoute of privateRoutes) {
+    const regex = new RegExp(privateRoute)
+    if (regex.test(nextRoute)) {
+      return true
+    }
+  }
+  return false
 }
