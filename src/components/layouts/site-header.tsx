@@ -20,7 +20,7 @@ export function SiteHeader({ user }: SiteHeaderProps) {
           <h1 className="font-bold  tracking-widest">NOT SELLING</h1>
           <p className="text-muted-foreground text-[0.6rem]">selling nothing</p>
         </Link>
-        <MainNav className="col-span-2 lg:col-span-1"/>
+        <MainNav className="col-span-2 place-self-center lg:col-span-1"/>
         <MobileNav/>
         <div className="flex items-center gap-2 place-self-end">
           <CartSheet />

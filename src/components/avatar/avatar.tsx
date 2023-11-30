@@ -1,8 +1,7 @@
 import Link from "next/link"
-import { useSession } from "@clerk/nextjs"
 
 import { UserRoleValues } from "@/lib/constants"
-import { checkUserRole, getUserEmail } from "@/lib/utils"
+import { getUserEmail } from "@/lib/utils"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {
   DropdownMenu,
@@ -15,8 +14,8 @@ import {
 import * as Icons from "@/components/icons"
 import { type SiteHeaderProps } from "@/components/layouts/site-header"
 
-import { type NavItem } from "../layouts/sidebar-nav"
 import LogOut from "./log-out"
+import type { NavItem } from "@/types"
 
 export const avatarOptions: NavItem[] = [
   {

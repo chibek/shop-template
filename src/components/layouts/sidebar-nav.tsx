@@ -1,27 +1,12 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { type NavItemWithChildren } from "@/types";
 import Link from "next/link";
-import * as Icons from "@/components/icons";
 import { useSelectedLayoutSegment } from "next/navigation";
-import { type UserRole } from "@/types";
+import * as Icons from "@/components/icons";
 
-export interface NavItem {
-  title: string;
-  href: string;
-  disabled?: boolean;
-  external?: boolean;
-  icon?: keyof typeof Icons;
-  label?: string;
-  description?: string;
-  role?: UserRole;
-}
-
-export interface SidebarNavProps extends React.HTMLAttributes<HTMLDivElement> {
-  items: NavItem[];
-}
-
-export function SidebarNav({ items, ...props }: SidebarNavProps) {
+export function SidebarNav({ items, ...props }: NavItemWithChildren) {
   const segment = useSelectedLayoutSegment();
 
   return (

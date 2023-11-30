@@ -8,8 +8,7 @@ import { ViewVerticalIcon } from "@radix-ui/react-icons"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-
-import { components } from "./main-nav"
+import { siteConfig } from "@/config/home"
 
 export function MobileNav() {
   const segment = useSelectedLayoutSegment()
@@ -41,7 +40,7 @@ export function MobileNav() {
         </div>
         <div className="pl-1 pr-7">
           <div className="my-4 flex h-[calc(100vh-8rem)] flex-col gap-4 pb-10 pl-6">
-            {components.map((component, index) => (
+            {siteConfig.mainNav.map((component, index) => (
               <MobileLink
                 key={index}
                 href={String(component.href)}

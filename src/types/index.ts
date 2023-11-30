@@ -1,6 +1,7 @@
 import { type Output } from "valibot"
 import { type userPrivateMetadataSchema } from "@/lib/validations/auth"
 import { type FileWithPath } from "react-dropzone"
+import type * as Icons from "@/components/icons";
 
 export type UserRole = Output<typeof userPrivateMetadataSchema.entries.role>
 export interface Option {
@@ -25,4 +26,22 @@ export interface DataTableSearchableColumn<TData> {
     id: string
     name: string
     url: string
+  }
+
+  export interface NavItem {
+    title: string;
+    href: string;
+    disabled?: boolean;
+    external?: boolean;
+    icon?: keyof typeof Icons;
+    label?: string;
+    description?: string;
+    role?: UserRole;
+  }
+  export interface NavItemWithOptionalChildren extends NavItem {
+    items?: NavItem[]
+  }
+
+  export interface NavItemWithChildren extends React.HTMLAttributes<HTMLDivElement> {
+    items: NavItem[];
   }
