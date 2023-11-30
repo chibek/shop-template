@@ -1,5 +1,5 @@
-import { OAuthSignIn } from "@/components/auth/oauth-signin";
-import SignUpForm from "@/components/forms/sign-up-form";
+import Link from "next/link"
+
 import {
   Card,
   CardContent,
@@ -7,14 +7,15 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import Link from "next/link";
+} from "@/components/ui/card"
+import { OAuthSignIn } from "@/components/auth/oauth-signin"
+import SignUpForm from "@/components/forms/sign-up-form"
 
-export default async function SignInPage() {
+export default function SignInPage() {
   return (
     <section className="container max-w-lg">
       <Card>
-      <CardHeader className="space-y-1">
+        <CardHeader className="space-y-1">
           <CardTitle className="text-2xl">Sign up</CardTitle>
           <CardDescription>
             Choose your preferred sign in method
@@ -27,7 +28,7 @@ export default async function SignInPage() {
               <span className="w-full border-t" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-background px-2 text-muted-foreground">
+              <span className="bg-background text-muted-foreground px-2">
                 Or continue with
               </span>
             </div>
@@ -35,7 +36,7 @@ export default async function SignInPage() {
           <SignUpForm />
         </CardContent>
         <CardFooter className="flex justify-between">
-          <div className="text-sm text-muted-foreground">
+          <div className="text-muted-foreground text-sm">
             <span className="mr-1 hidden sm:inline-block">
               Do have an account?
             </span>
@@ -50,5 +51,5 @@ export default async function SignInPage() {
         </CardFooter>
       </Card>
     </section>
-  );
+  )
 }

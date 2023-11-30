@@ -9,7 +9,7 @@ import {
 } from "@/lib/validations/product";
 import { and, eq, not } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
-import { Output, number, object, parse } from "valibot";
+import { type Output, parse } from "valibot";
 
 export async function checkProductName(input: { name: string; id?: number }) {
   const productWithSameName = await db.query.products.findFirst({

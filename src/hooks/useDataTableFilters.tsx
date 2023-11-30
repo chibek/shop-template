@@ -1,6 +1,6 @@
-import { DataTableSearchableColumn } from "@/types";
+import { type DataTableSearchableColumn } from "@/types";
 import { useCreateQueryString } from "./useCreateQueryString";
-import { ColumnFiltersState } from "@tanstack/react-table";
+import { type ColumnFiltersState } from "@tanstack/react-table";
 import { useEffect } from "react";
 
 interface DataTableFilters<TData> {

@@ -1,4 +1,4 @@
-import { StoredFile } from "@/types";
+import { type StoredFile } from "@/types";
 import {
   mysqlTable,
   serial,

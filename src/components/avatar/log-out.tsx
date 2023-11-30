@@ -8,7 +8,7 @@ export default function LogOut() {
   const { signOut } = useClerk();
 
   return (
-    <button className="flex items-center gap-2 cursor-default" onClick={() => signOut(() => router.push("/"))}>
+    <button className="flex cursor-default items-center gap-2" onClick={() => signOut(() => router.push("/"))}>
       <ExitIcon />
       Log out
     </button>

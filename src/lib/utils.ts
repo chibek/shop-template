@@ -1,27 +1,28 @@
-import { SiteHeaderProps } from "@/components/layouts/site-header";
-import { isClerkAPIResponseError } from "@clerk/nextjs";
-import { type ClassValue, clsx } from "clsx";
-import { toast } from "sonner";
-import { twMerge } from "tailwind-merge";
-import { ValiError } from "valibot";
+import { isClerkAPIResponseError } from "@clerk/nextjs"
+import { clsx, type ClassValue } from "clsx"
+import { toast } from "sonner"
+import { twMerge } from "tailwind-merge"
+import { ValiError } from "valibot"
+
+import { type SiteHeaderProps } from "@/components/layouts/site-header"
 
 export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
+  return twMerge(clsx(inputs))
 }
 
 export function catchClerkError(err: unknown) {
-  const unknownErr = "Something went wrong, please try again later.";
+  const unknownErr = "Something went wrong, please try again later."
   if (isClerkAPIResponseError(err)) {
-    return toast.error(err.errors[0]?.longMessage ?? unknownErr);
+    return toast.error(err.errors[0]?.longMessage ?? unknownErr)
   }
-  return toast.error(unknownErr);
+  return toast.error(unknownErr)
 }
 
 export function getUserEmail({ user }: SiteHeaderProps) {
   const emailObject = user?.emailAddresses.find(
     ({ id }) => user.primaryEmailAddressId === id
-  );
-  return emailObject?.emailAddress;
+  )
+  return emailObject?.emailAddress
 }
 
 export function formatPrice(
@@ -49,10 +50,10 @@ export function formatDate(date: Date | string | number) {
 }
 
 export const paramTonumber = (value: string | null, default_page: number) => {
-  const page = Number(value);
-  if (isNaN(page) || page < 1) return default_page;
-  return page;
-};
+  const page = Number(value)
+  if (isNaN(page) || page < 1) return default_page
+  return page
+}
 
 export function toSentenceCase(str: string) {
   return str

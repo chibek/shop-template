@@ -1,6 +1,6 @@
 import { type Output } from "valibot"
 import { type userPrivateMetadataSchema } from "@/lib/validations/auth"
-import { FileWithPath } from "react-dropzone"
+import { type FileWithPath } from "react-dropzone"
 
 export type UserRole = Output<typeof userPrivateMetadataSchema.entries.role>
 export interface Option {

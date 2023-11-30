@@ -1,7 +1,7 @@
 import { Separator } from "@/components/ui/separator";
 import { UserProfile } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
-import { Theme } from "@clerk/types";
+import { type Theme } from "@clerk/types";
 
 const appearance: Theme = {
   baseTheme: dark,

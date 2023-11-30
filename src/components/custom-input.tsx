@@ -1,8 +1,8 @@
 import {
-  FieldValues,
+  type FieldValues,
   type Control,
-  FieldPath,
-  ControllerProps,
+  type FieldPath,
+  type ControllerProps,
 } from "react-hook-form";
 import {
   FormControl,
@@ -11,8 +11,8 @@ import {
   FormLabel,
   FormMessage,
 } from "./ui/form";
-import { Input, InputProps } from "./ui/input";
-import { HTMLInputTypeAttribute } from "react";
+import { Input, type InputProps } from "./ui/input";
+import { type HTMLInputTypeAttribute } from "react";
 import { Textarea } from "./ui/textarea";
 
 interface CustomInput<

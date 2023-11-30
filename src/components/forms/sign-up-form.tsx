@@ -13,8 +13,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { PasswordInput } from "@/components/password-input";
-import { Output } from "valibot";
-import { authSchema, signUpSchema } from "@/lib/validations/auth";
+import { type Output } from "valibot";
+import { authSchema, type signUpSchema } from "@/lib/validations/auth";
 import { useSignUp } from "@clerk/nextjs";
 import { useTransition } from "react";
 import { Spinner } from "../icons";

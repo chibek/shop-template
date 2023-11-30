@@ -17,25 +17,25 @@ export default function CartSheetProduct({
   const cartStore = useCartStore();
 
   return (
-    <div className="grid grid-cols-5 items-center gap-2 place-items-center ">
+    <div className="grid grid-cols-5 place-items-center items-center gap-2 ">
       <div
         aria-label="Placeholder"
         role="img"
         aria-roledescription="placeholder"
-        className="flex items-center justify-center bg-secondary rounded-sm aspect-square h-16 w-16"
+        className="bg-secondary flex aspect-square h-16 w-16 items-center justify-center rounded-sm"
       >
         <Placeholder
-          className="h-9 w-9 text-muted-foreground"
+          className="text-muted-foreground h-9 w-9"
           aria-hidden="true"
         />
       </div>
-      <div className="flex flex-col col-span-2 place-self-center pl-2 justify-self-start max-w-full gap-1">
+      <div className="col-span-2 flex max-w-full flex-col gap-1 place-self-center justify-self-start pl-2">
         <span className="truncate">{product.name}</span>
-        <span className="text-xs text-muted-foreground">
+        <span className="text-muted-foreground text-xs">
           {formatPrice(product.price)} x {quantity} ={" "}
           {formatPrice((Number(product.price) * Number(quantity)).toFixed(2))}
         </span>
-        <span className="text-xs text-muted-foreground">Qty {quantity}</span>
+        <span className="text-muted-foreground text-xs">Qty {quantity}</span>
       </div>
       <NumberInput
         min={0}

@@ -6,7 +6,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { PasswordInput } from "@/components/password-input";
-import { Output } from "valibot";
+import { type Output } from "valibot";
 import { authSchema } from "@/lib/validations/auth";
 import { useRouter } from "next/navigation";
 import { useSignIn } from "@clerk/nextjs";

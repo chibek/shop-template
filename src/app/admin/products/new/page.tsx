@@ -13,7 +13,7 @@ import Link from "next/link";
 
 export default function ProductNew() {
   return (
-    <div className="flex flex-col gap-4 items-start container">
+    <div className="container flex flex-col items-start gap-4">
       <Link
         className={cn(
           buttonVariants({

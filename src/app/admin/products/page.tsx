@@ -1,6 +1,6 @@
 import ProductsTable from "@/components/data-table-types/product-table";
 import { db } from "@/db";
-import { Product, products } from "@/db/schema";
+import { type Product, products } from "@/db/schema";
 import { paramTonumber } from "@/lib/utils";
 import { dashboardProductsSearchParamsSchema } from "@/lib/validations/params";
 import { sql, asc, desc, and, like } from "drizzle-orm";

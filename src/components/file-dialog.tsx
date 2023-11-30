@@ -9,9 +9,9 @@ import type {
   UseFormSetValue,
 } from "react-hook-form";
 import {
-  Accept,
-  FileRejection,
-  FileWithPath,
+  type Accept,
+  type FileRejection,
+  type FileWithPath,
   useDropzone,
 } from "react-dropzone";
 import type { FileWithPreview } from "@/types";
@@ -96,14 +96,14 @@ export function FileDialog<TFieldValues extends FieldValues>({
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[480px]">
-        <p className="absolute left-5 top-4 text-base font-medium text-muted-foreground">
+        <p className="text-muted-foreground absolute left-5 top-4 text-base font-medium">
           Upload your images
         </p>
         <div
           {...getRootProps()}
           className={cn(
-            "group relative mt-8 grid h-48 w-full cursor-pointer place-items-center rounded-lg border-2 border-dashed border-muted-foreground/25 px-5 py-2.5 text-center transition hover:bg-muted/25",
-            "ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+            "border-muted-foreground/25 hover:bg-muted/25 group relative mt-8 grid h-48 w-full cursor-pointer place-items-center rounded-lg border-2 border-dashed px-5 py-2.5 text-center transition",
+            "ring-offset-background focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
             isDragActive && "border-muted-foreground/50",
             disabled && "pointer-events-none opacity-60",
             className
@@ -114,12 +114,12 @@ export function FileDialog<TFieldValues extends FieldValues>({
           {isUploading ? (
             <div className="group grid w-full place-items-center gap-1 sm:px-10">
               <UploadIcon
-                className="h-9 w-9 animate-pulse text-muted-foreground"
+                className="text-muted-foreground h-9 w-9 animate-pulse"
                 aria-hidden="true"
               />
             </div>
           ) : isDragActive ? (
-            <div className="grid place-items-center gap-2 text-muted-foreground sm:px-5">
+            <div className="text-muted-foreground grid place-items-center gap-2 sm:px-5">
               <UploadIcon
                 className={cn("h-8 w-8", isDragActive && "animate-bounce")}
                 aria-hidden="true"
@@ -129,10 +129,10 @@ export function FileDialog<TFieldValues extends FieldValues>({
           ) : (
             <div className="grid place-items-center gap-1 sm:px-5">
               <UploadIcon
-                className="h-8 w-8 text-muted-foreground"
+                className="text-muted-foreground h-8 w-8"
                 aria-hidden="true"
               />
-              <p className="mt-2 text-base font-medium text-muted-foreground">
+              <p className="text-muted-foreground mt-2 text-base font-medium">
                 Drag {`'n'`} drop file here, or click to select file
               </p>
               <p className="text-sm text-slate-500">
@@ -141,7 +141,7 @@ export function FileDialog<TFieldValues extends FieldValues>({
             </div>
           )}
         </div>
-        <p className="text-center text-sm font-medium text-muted-foreground">
+        <p className="text-muted-foreground text-center text-sm font-medium">
           You can upload up to {maxFiles} {maxFiles === 1 ? "file" : "files"}
         </p>
         {files?.length ? (
@@ -202,7 +202,7 @@ function FileCard({ file, files, setFiles }: FileCardProps) {
           loading="lazy"
         />
         <div className="flex flex-col">
-          <p className="line-clamp-1 text-sm font-medium text-muted-foreground">
+          <p className="text-muted-foreground line-clamp-1 text-sm font-medium">
             {file.name}
           </p>
           <p className="text-xs text-slate-500">

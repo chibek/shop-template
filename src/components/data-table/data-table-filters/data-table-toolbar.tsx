@@ -8,7 +8,7 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { DataTableViewOptions } from "@/components/data-table/data-table-filters/data-table-view-options";
 import { DataTableFacetedFilter } from "./data-table-facete-filter";
-import { DataTableFilterableColumn, DataTableSearchableColumn } from "@/types";
+import { type DataTableFilterableColumn, type DataTableSearchableColumn } from "@/types";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";

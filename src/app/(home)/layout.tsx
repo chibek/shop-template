@@ -1,4 +1,3 @@
-import { MainNav } from "@/components/layouts/main-nav";
 import { SiteHeader } from "@/components/layouts/site-header";
 import { currentUser } from "@clerk/nextjs";
 

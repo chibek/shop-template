@@ -19,11 +19,11 @@ export interface SidebarNavProps extends React.HTMLAttributes<HTMLDivElement> {
   items: NavItem[];
 }
 
-export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
+export function SidebarNav({ items, ...props }: SidebarNavProps) {
   const segment = useSelectedLayoutSegment();
 
   return (
-    <div className={cn("flex flex-col gap-2 group")} {...props}>
+    <div className={cn("group flex flex-col gap-2")} {...props}>
       {items.map((item, index) => {
         const Icon = item.icon ? Icons[item.icon] : Icons["Dashboard"];
 
@@ -35,15 +35,15 @@ export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
           >
             <span
               className={cn(
-                "gap-1 flex w-full items-center rounded-md p-2 hover:bg-muted hover:text-foreground leading-3 text-sm overflow-hidden",
+                "hover:bg-muted hover:text-foreground flex w-full items-center gap-1 overflow-hidden rounded-md p-2 text-sm leading-3",
                 item.href.includes(String(segment))
-                  ? "bg-muted font-medium text-foreground"
+                  ? "bg-muted text-foreground font-medium"
                   : "text-muted-foreground",
                 item.disabled && "pointer-events-none opacity-60"
               )}
             >
               <Icon aria-hidden="true" className="h-4 w-5 flex-none" />
-              <span className="whitespace-nowrap sm:opacity-100 opacity-0 transition-opacity group-hover:opacity-100 delay-95 duration-500">{item.title}</span>
+              <span className="delay-95 whitespace-nowrap opacity-0 transition-opacity duration-500 group-hover:opacity-100 sm:opacity-100">{item.title}</span>
             </span>
           </Link>
         );

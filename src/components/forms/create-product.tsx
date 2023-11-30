@@ -1,6 +1,6 @@
 "use client";
 
-import { Output } from "valibot";
+import { type Output } from "valibot";
 import { useForm } from "react-hook-form";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { useEffect, useState, useTransition } from "react";
@@ -15,7 +15,7 @@ import { CustomInput } from "../custom-input";
 import { Button } from "../ui/button";
 import { Spinner } from "../icons";
 import { FileDialog } from "../file-dialog";
-import { FileWithPreview } from "@/types";
+import { type FileWithPreview } from "@/types";
 import { Separator } from "../ui/separator";
 import Image from "next/image";
 import { ZoomImage } from "../zoom-image";
@@ -66,7 +66,7 @@ export default function NewProductForm() {
                 }
                 return imageObject;
               });
-              addProduct({
+              await addProduct({
                 ...data,
                 images: formattedImages ?? null,
                 thumbnail: thumbnailImage,

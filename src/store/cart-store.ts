@@ -1,4 +1,4 @@
-import { Product } from "@/db/schema";
+import { type Product } from "@/db/schema";
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 

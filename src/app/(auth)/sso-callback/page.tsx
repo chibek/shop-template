@@ -10,7 +10,7 @@ export default function SSOCallbackPage({
   searchParams,
 }: SSOCallbackPageProps) {
   return (
-    <section className="max-w-lg container">
+    <section className="container max-w-lg">
       <SSOCallback searchParams={searchParams} />
     </section>
   )

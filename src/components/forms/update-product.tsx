@@ -18,7 +18,7 @@ import {
   UncontrolledFormMessage,
 } from "@/components/ui/form";
 import { FileDialog } from "@/components/file-dialog";
-import { Output } from "valibot";
+import { type Output } from "valibot";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { useUploadThing } from "@/lib/uploadthing";
 import { deleteProduct, updateProduct } from "@/app/api/products/service";

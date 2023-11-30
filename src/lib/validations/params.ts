@@ -1,4 +1,4 @@
-import { fallback, merge, object, optional, string } from "valibot"
+import { fallback, object, optional, string } from "valibot"
 
 export const searchParamsSchema = object({
     page: fallback(string(), "1"),

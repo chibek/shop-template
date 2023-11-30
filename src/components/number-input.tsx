@@ -1,8 +1,8 @@
 "use client";
 import { MinusIcon, PlusIcon } from "@radix-ui/react-icons";
 import { Button } from "./ui/button";
-import { Input, InputProps } from "./ui/input";
-import { ChangeEvent, useId } from "react";
+import { Input, type InputProps } from "./ui/input";
+import { type ChangeEvent, useId } from "react";
 
 interface NumberInputProps extends InputProps {
   increment: () => void;

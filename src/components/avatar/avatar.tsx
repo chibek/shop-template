@@ -7,11 +7,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { AvatarImage, Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { SiteHeaderProps } from "@/components/layouts/site-header";
+import { type SiteHeaderProps } from "@/components/layouts/site-header";
 import { getUserEmail } from "@/lib/utils";
 import LogOut from "./log-out";
 import Link from "next/link";
-import { NavItem } from "../layouts/sidebar-nav";
+import { type NavItem } from "../layouts/sidebar-nav";
 import * as Icons from "@/components/icons";
 
 export const avatarOptions: NavItem[] = [
@@ -62,7 +62,7 @@ export default function UserAvatar({ user }: SiteHeaderProps) {
           <p className="text-sm font-medium leading-none">
             {user?.firstName} {user?.lastName}
           </p>
-          <p className="text-xs leading-none text-muted-foreground">{email}</p>
+          <p className="text-muted-foreground text-xs leading-none">{email}</p>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         {avatarOptions.map((item, key) => {

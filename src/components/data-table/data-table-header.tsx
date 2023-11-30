@@ -67,7 +67,7 @@ export function DataTableColumnHeader<TData, TValue>({
             }
             variant="ghost"
             size="sm"
-            className="-ml-3 h-8 data-[state=open]:bg-accent"
+            className="data-[state=open]:bg-accent -ml-3 h-8"
           >
             <span>{title}</span>
             {isSorted ? SORT_ICONS[isSorted] : SORT_ICONS.default}
@@ -80,7 +80,7 @@ export function DataTableColumnHeader<TData, TValue>({
             className={cn(isSorted === SORT_OPTION.asc && "bg-accent")}
           >
             <ArrowUpIcon
-              className="mr-2 h-3.5 w-3.5 text-muted-foreground/70"
+              className="text-muted-foreground/70 mr-2 h-3.5 w-3.5"
               aria-hidden="true"
             />
             Asc
@@ -91,7 +91,7 @@ export function DataTableColumnHeader<TData, TValue>({
             className={cn(isSorted === SORT_OPTION.desc && "bg-accent")}
           >
             <ArrowDownIcon
-              className="mr-2 h-3.5 w-3.5 text-muted-foreground/70"
+              className="text-muted-foreground/70 mr-2 h-3.5 w-3.5"
               aria-hidden="true"
             />
             Desc
@@ -102,7 +102,7 @@ export function DataTableColumnHeader<TData, TValue>({
             className={cn(isSorted === SORT_OPTION.default && "bg-accent")}
           >
             <CaretSortIcon
-              className="mr-2 h-3.5 w-3.5 text-muted-foreground/70"
+              className="text-muted-foreground/70 mr-2 h-3.5 w-3.5"
               aria-hidden="true"
             />
             Default
@@ -113,7 +113,7 @@ export function DataTableColumnHeader<TData, TValue>({
             onClick={() => column.toggleVisibility(false)}
           >
             <EyeNoneIcon
-              className="mr-2 h-3.5 w-3.5 text-muted-foreground/70"
+              className="text-muted-foreground/70 mr-2 h-3.5 w-3.5"
               aria-hidden="true"
             />
             Hide

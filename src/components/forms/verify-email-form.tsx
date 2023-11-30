@@ -17,7 +17,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { Output } from "valibot"
+import { type Output } from "valibot"
 import { valibotResolver } from "@hookform/resolvers/valibot"
 import { Spinner } from "../icons"
 

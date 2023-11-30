@@ -63,7 +63,7 @@ export default function CartSheet() {
             </li>
           ))}
         </ul>
-        <div className="flex justify-between items-center mt-4">
+        <div className="mt-4 flex items-center justify-between">
           <span className="text-lg font-bold">Total:</span>
           <span className="text-xl font-bold">${totalPrice.toFixed(2)}</span>
         </div>

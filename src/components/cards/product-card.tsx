@@ -48,10 +48,10 @@ export default function ProductCard({
               aria-label="Placeholder"
               role="img"
               aria-roledescription="placeholder"
-              className="flex h-full w-full items-center justify-center bg-secondary"
+              className="bg-secondary flex h-full w-full items-center justify-center"
             >
               <Placeholder
-                className="h-9 w-9 text-muted-foreground"
+                className="text-muted-foreground h-9 w-9"
                 aria-hidden="true"
               />
             </div>

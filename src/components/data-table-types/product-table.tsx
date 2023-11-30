@@ -3,9 +3,9 @@
 import { DataTable } from "@/components/data-table/data-table";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-header";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Product } from "@/db/schema";
-import { catchError, catchPromiseError, formatDate, formatPrice } from "@/lib/utils";
-import { ColumnDef, Row } from "@tanstack/react-table";
+import { type Product } from "@/db/schema";
+import { catchPromiseError, formatDate, formatPrice } from "@/lib/utils";
+import { type ColumnDef, type Row } from "@tanstack/react-table";
 import { startTransition, useMemo, useState, useTransition } from "react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { Button } from "../ui/button";
@@ -124,7 +124,7 @@ function ProductTableActions({row,isPending}:ProductTableActions){
       <Button
         aria-label="Open menu"
         variant="ghost"
-        className="flex h-8 w-8 p-0 data-[state=open]:bg-muted"
+        className="data-[state=open]:bg-muted flex h-8 w-8 p-0"
       >
         <DotsHorizontalIcon className="h-4 w-4" aria-hidden="true" />
       </Button>

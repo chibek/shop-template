@@ -1,4 +1,3 @@
-import NewProductForm from "@/components/forms/create-product";
 import { UpdateProductForm } from "@/components/forms/update-product";
 import { buttonVariants } from "@/components/ui/button";
 import {
@@ -35,7 +34,7 @@ export default async function UpdateProduct({
   }
 
   return (
-    <div className="flex flex-col gap-4 items-start container">
+    <div className="container flex flex-col items-start gap-4">
       <Link
         className={cn(
           buttonVariants({
@@ -61,5 +60,5 @@ export default async function UpdateProduct({
         </CardContent>
       </Card>
     </div>
-  );
+  );    
 }
