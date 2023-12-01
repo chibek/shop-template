@@ -1,23 +1,27 @@
-"use client";
+"use client"
 
-import type { Product } from "@/db/schema";
+import Image from "next/image"
+import Link from "next/link"
+import type { Product } from "@/db/schema"
+import { useCartStore } from "@/store/cart-store"
+import { AspectRatio } from "@radix-ui/react-aspect-ratio"
+
+import { cn, formatPrice } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
 import {
   Card,
+  CardContent,
+  CardDescription,
   CardFooter,
   CardHeader,
-  CardContent,
   CardTitle,
-  CardDescription,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { useCartStore } from "@/store/cart-store";
-import Image from "next/image";
-import { AspectRatio } from "@radix-ui/react-aspect-ratio";
-import { Placeholder } from "../icons";
-import { cn, formatPrice } from "@/lib/utils";
+} from "@/components/ui/card"
+
+import { Placeholder } from "../icons"
+import { PlaceholderImage } from "../placeholder-image"
 
 interface ProductCardProps extends React.HTMLAttributes<HTMLDivElement> {
-  product: Product;
+  product: Product
 }
 
 export default function ProductCard({
@@ -25,57 +29,47 @@ export default function ProductCard({
   className,
   ...props
 }: ProductCardProps) {
-  const addToCart = useCartStore((state) => state.addToCart);
-  
+  const addToCart = useCartStore((state) => state.addToCart)
+
   return (
     <Card
-      className={cn(className, "h-full overflow-hidden rounded-sm")}
+      className={cn(className, "h-full overflow-hidden rounded-lg")}
       {...props}
     >
-      <CardHeader className="border-b p-0">
-        <AspectRatio ratio={4 / 3}>
-          {product.thumbnail ? (
-            <Image
-              src={product.thumbnail}
-              alt={product.name}
-              className="object-cover"
-              sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
-              fill
-              loading="lazy"
-            />
-          ) : (
-            <div
-              aria-label="Placeholder"
-              role="img"
-              aria-roledescription="placeholder"
-              className="bg-secondary flex h-full w-full items-center justify-center"
-            >
-              <Placeholder
-                className="text-muted-foreground h-9 w-9"
-                aria-hidden="true"
+      <Link href={`/products/${product.id}`}>
+        <CardHeader className="border-b p-0">
+          <AspectRatio ratio={4 / 3}>
+            {product.thumbnail ? (
+              <Image
+                src={product.thumbnail}
+                alt={product.name}
+                className="object-cover"
+                sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
+                fill
+                loading="lazy"
               />
-            </div>
-          )}
-        </AspectRatio>
-      </CardHeader>
-      <CardContent className="grid gap-2.5 p-4">
-        <CardTitle className="line-clamp-1">{product.name}</CardTitle>
-        <CardDescription className="line-clamp-2">
-          {formatPrice(product.price)}
-        </CardDescription>
-      </CardContent>
-      <CardFooter className="p-4">
+            ) : <PlaceholderImage asChild={true} className="h-full rounded-b-none"/>}
+          </AspectRatio>
+        </CardHeader>
+        <CardContent className="grid gap-1 p-4">
+          <CardTitle className="line-clamp-1">{product.name}</CardTitle>
+          <CardDescription className="line-clamp-2">
+            {formatPrice(product.price)}
+          </CardDescription>
+        </CardContent>
+      </Link>
+      <CardFooter className="px-4 pb-3">
         <Button
           aria-label="Add to cart"
           size="sm"
           className="h-8 w-full rounded-sm"
           onClick={() => {
-            addToCart(product);
+            addToCart(product)
           }}
         >
           Add to card
         </Button>
       </CardFooter>
     </Card>
-  );
+  )
 }

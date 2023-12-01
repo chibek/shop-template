@@ -101,6 +101,30 @@ export default function ProductsTable({
     [data, isPending]
   );
 
+  function deleteSelectedRows() {
+    toast.promise(
+      Promise.all(
+        selectedRowIds.map((id) =>
+          deleteProduct({
+            id,
+          })
+        )
+      ),
+      {
+        loading: "Deleting...",
+        success: () => {
+          setSelectedRowIds([])
+          return "Products deleted successfully."
+        },
+        error: (err: unknown) => {
+          setSelectedRowIds([])
+          return catchPromiseError(err)
+        },
+      }
+    )
+  }
+  
+
   return (
     <DataTable
       columns={columns}
@@ -108,6 +132,7 @@ export default function ProductsTable({
       pageCount={pageCount}
       searchableColumns={{id: "name", title: "name"}}
       newRowLink="/admin/products/new"
+      deleteRowsAction={deleteSelectedRows}
     />
   );
 }

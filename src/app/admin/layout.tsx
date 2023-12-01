@@ -1,8 +1,9 @@
 import { redirect } from "next/navigation"
 import { currentUser } from "@clerk/nextjs"
 
-import { type NavItem, SidebarNav } from "@/components/layouts/sidebar-nav"
+import { SidebarNav } from "@/components/layouts/sidebar-nav"
 import { SiteHeader } from "@/components/layouts/site-header"
+import { type NavItem } from "@/types"
 
 const sidebarOptions: NavItem[] = [
   {

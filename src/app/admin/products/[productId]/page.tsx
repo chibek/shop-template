@@ -25,6 +25,9 @@ export default async function UpdateProduct({
   params,
 }: UpdateProductPageProps) {
   const productId = Number(params.productId);
+  if (isNaN(productId)) {
+    notFound()
+  }
   const product = await db.query.products.findFirst({
     where: and(eq(products.id, productId)),
   });

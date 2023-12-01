@@ -1,7 +1,9 @@
+import React from "react"
 import { db } from "@/db"
 import { products } from "@/db/schema"
 
 import ProductCard from "@/components/cards/product-card"
+import { ProductCardSkeleton } from "@/components/skeletons/product-card-skeleton"
 
 export default async function Home() {
   const queryProducts = await db.select().from(products)
@@ -16,10 +18,18 @@ export default async function Home() {
           around the world with ease
         </p>
       </section>
-      <section className="grid grid-cols-4 gap-4">
-        {queryProducts.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
+      <section className="content-grid full-width">
+        <div className="max-size grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 ">
+          <React.Suspense
+            fallback={Array.from({ length: 4 }).map((_, i) => (
+              <ProductCardSkeleton key={i} />
+            ))}
+          >
+            {queryProducts.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </React.Suspense>
+        </div>
       </section>
     </>
   )
